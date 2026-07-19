@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Power Loka Girlies 💗</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<audio id="bg-music" loop preload="none">
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="app">
+
+  <!-- ══ SCREEN 1: MATCHING GAME ══ -->
+  <section class="screen active" id="screen-match">
+    <div class="match-header">
+      <p class="eyebrow">before your surprise ✨</p>
+      <h1>let's play a little game 💗</h1>
+      <p>tap two cards to find the matching pairs!</p>
+    </div>
+    <div class="screen-inner">
+      <div class="moves-bar">
+        <div class="moves-badge">🎯 Moves: <span id="move-count">0</span></div>
+      </div>
+      <div class="card-grid" id="card-grid"></div>
+      <button class="link-btn" id="skip-game">skip game →</button>
+    </div>
+  </section>
+
+  <!-- ══ CONGRATS OVERLAY ══ -->
+  <div class="overlay" id="screen-congrats">
+    <div class="congrats-card">
+      <span class="confetti-emoji">🎉</span>
+      <h2>congratulations!</h2>
+      <p>you found all the pairs, bestie 💕</p>
+      <button class="btn btn-primary" id="congrats-continue">see your surprise →</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: REVEAL ══ -->
+  <section class="screen" id="screen-reveal">
+    <div class="reveal-inner">
+      <p class="reveal-sub">introducing...</p>
+      <h1 class="reveal-title">Power Loka Girlies 💗</h1>
+      <div class="polaroid">
+        <img src="group-photo.jpg" alt="Power Loka Girlies" onerror="this.src=window.PLG_PH_GROUP">
+        <p class="polaroid-caption">the girlies fr fr ✨</p>
+      </div>
+      <div class="swipe-hint" id="swipe-hint">
+        <span class="swipe-arrow">↑</span>
+        <span>swipe up to continue</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SCREEN 3: DASHBOARD ══ -->
+  <section class="screen" id="screen-dashboard">
+    <div class="dash-header">
+      <div class="dash-avatar">💗</div>
+      <h1>birthday treats</h1>
+      <p>what do you want to open first?</p>
+      <div class="dash-points">✨ <span id="points-display">0</span> pts</div>
+    </div>
+    <div class="menu-section">
+      <p class="menu-label">choose a section</p>
+      <div class="menu-grid">
+        <button class="menu-btn" data-target="screen-music">
+          <div class="menu-btn-icon icon-music">🎵</div>
+          <div>
+            <div class="menu-btn-label">music</div>
+            <div class="menu-btn-sub">our song 🎶</div>
+          </div>
+          <span class="menu-btn-arrow">›</span>
+        </button>
+        <button class="menu-btn" data-target="screen-message">
+          <div class="menu-btn-icon icon-msg">💌</div>
+          <div>
+            <div class="menu-btn-label">message</div>
+            <div class="menu-btn-sub">3 surprises</div>
+          </div>
+          <span class="menu-btn-arrow">›</span>
+        </button>
+        <button class="menu-btn" data-target="screen-memories">
+          <div class="menu-btn-icon icon-mem">📸</div>
+          <div>
+            <div class="menu-btn-label">memories</div>
+            <div class="menu-btn-sub">10 photos</div>
+          </div>
+          <span class="menu-btn-arrow">›</span>
+        </button>
+        <button class="menu-btn" data-target="screen-game-intro">
+          <div class="menu-btn-icon icon-game">🎮</div>
+          <div>
+            <div class="menu-btn-label">play a game</div>
+            <div class="menu-btn-sub">earn points!</div>
+          </div>
+          <span class="menu-btn-arrow">›</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SCREEN 4: MUSIC ══ -->
+  <section class="screen" id="screen-music">
+    <div class="music-bg">
+      <button class="back-btn" data-target="screen-dashboard">← back</button>
+      <div class="vinyl" id="vinyl"><div class="vinyl-hole"></div></div>
+      <p class="music-title">our song 🎵</p>
+      <p class="music-sub">stays playing even when you go back 💫</p>
+    </div>
+    <div class="music-controls">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="play-row">
+        <button class="btn btn-primary" id="play-pause-btn">▶</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SCREEN 5: MESSAGE ══ -->
+  <section class="screen" id="screen-message">
+    <div class="screen-header">
+      <div class="header-deco"></div><div class="header-deco2"></div>
+      <button class="back-btn" data-target="screen-dashboard">← back</button>
+      <h1>a lil message 💌</h1>
+      <p>tap each envelope to reveal</p>
+    </div>
+    <div class="message-list" id="message-list"></div>
+  </section>
+
+  <!-- ══ SCREEN 6: MEMORIES ══ -->
+  <section class="screen" id="screen-memories">
+    <div class="screen-header">
+      <div class="header-deco"></div><div class="header-deco2"></div>
+      <button class="back-btn" data-target="screen-dashboard">← back</button>
+      <h1>memories 📸</h1>
+      <p>tap any photo to see it bigger</p>
+    </div>
+    <div class="memories-grid" id="memories-grid"></div>
+  </section>
+
+  <!-- ══ LIGHTBOX ══ -->
+  <div class="overlay" id="lightbox">
+    <div class="lightbox-card">
+      <button class="close-btn" id="lightbox-close">✕</button>
+      <img id="lightbox-img" src="" alt="memory">
+      <p id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 7: GAME INTRO ══ -->
+  <section class="screen" id="screen-game-intro">
+    <div class="screen-header">
+      <div class="header-deco"></div><div class="header-deco2"></div>
+      <button class="back-btn" data-target="screen-dashboard">← back</button>
+      <h1>catch the leaves 🍂</h1>
+      <p>earn points to unlock secret content!</p>
+    </div>
+    <div class="how-to-grid">
+      <div class="how-card">
+        <span class="how-icon">🍂</span>
+        <div class="how-text"><b>leaves fall</b>from the top of the screen</div>
+      </div>
+      <div class="how-card">
+        <span class="how-icon">🧺</span>
+        <div class="how-text"><b>drag the basket</b>left and right to catch them</div>
+      </div>
+      <div class="how-card">
+        <span class="how-icon">✅</span>
+        <div class="how-text"><b>+1 point</b>for every leaf you catch!</div>
+      </div>
+      <div class="how-card">
+        <span class="how-icon">⏱️</span>
+        <div class="how-text"><b>25 seconds</b>catch as many as you can</div>
+      </div>
+    </div>
+    <div class="intro-cta">
+      <button class="btn btn-primary" id="start-leaf-game">let's go! 🍂</button>
+    </div>
+  </section>
+
+  <!-- ══ SCREEN 8: LEAF GAME ══ -->
+  <section class="screen" id="screen-game">
+    <div class="game-hud">
+      <div class="hud-chip">⏱️ <span id="game-timer">25</span>s</div>
+      <div class="hud-divider">|</div>
+      <div class="hud-chip">🍂 <span id="game-score">0</span> caught</div>
+    </div>
+    <div class="game-area" id="game-area">
+      <div class="sun"></div>
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="cloud c3"></div>
+      <div class="bird b1">〜</div>
+      <div class="bird b2">〜</div>
+      <div class="hills"></div>
+      <div class="meadow">
+        <span class="flower">🌸</span><span class="flower">🌼</span>
+        <span class="flower">🌷</span><span class="flower">🌸</span>
+        <span class="flower">🌼</span><span class="flower">🌷</span>
+        <span class="flower">🌸</span><span class="flower">🌼</span>
+      </div>
+      <div class="basket" id="basket">🧺</div>
+    </div>
+  </section>
+
+  <!-- ══ SCREEN 9: GAME OVER ══ -->
+  <section class="screen" id="screen-gameover">
+    <div class="gameover-hero">
+      <span class="gameover-trophy">🏆</span>
+      <h1>nice catch, girlie!</h1>
+      <p>here's what you earned:</p>
+    </div>
+    <div class="score-card">
+      <div class="score-label">points earned this round</div>
+      <div class="score-big"><span id="points-earned-count">0</span></div>
+      <div class="score-unit">pts added to your balance ✨</div>
+    </div>
+    <div class="gameover-btns">
+      <button class="btn btn-secondary" id="play-again-btn">play again</button>
+      <button class="btn btn-gold" id="go-shop-btn">go to shop 🛍️</button>
+    </div>
+  </section>
+
+  <!-- ══ SCREEN 10: SHOP ══ -->
+  <section class="screen" id="screen-shop">
+    <div class="shop-hero">
+      <button class="back-btn" data-target="screen-dashboard">← back</button>
+      <h1>girlie's shop 🛍️</h1>
+      <p>spend your points on secret unlocks</p>
+      <div class="shop-balance">✨ <span id="shop-points-display">0</span> pts</div>
+    </div>
+    <div class="shop-section">
+      <p class="shop-section-label">available items</p>
+      <div class="shop-list" id="shop-list"></div>
+    </div>
+  </section>
+
+  <!-- ══ TOAST ══ -->
+  <div class="toast" id="toast"></div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
